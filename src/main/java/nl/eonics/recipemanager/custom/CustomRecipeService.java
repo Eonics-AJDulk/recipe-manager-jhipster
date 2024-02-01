@@ -34,28 +34,34 @@ public class CustomRecipeService {
 
         if (ingredients != null && !ingredients.isEmpty()) {
             for (String ingredient : ingredients) {
-                IngredientCriteria ingredientCriteria = new IngredientCriteria();
-                StringFilter stringFilter = new StringFilter();
-                stringFilter.setEquals(ingredient);
-                ingredientCriteria.setName(stringFilter);
-                List<IngredientDTO> ingredientDTOs = ingredientQueryService.findByCriteria(ingredientCriteria);
-                RecipeCriteria recipeCriteria = new RecipeCriteria();
+                List<IngredientDTO> ingredientDTOs = getIngredientDTOs(ingredient);
                 for (IngredientDTO ingredientDTO : ingredientDTOs) {
-                    StringFilter recipeStringFilter = new StringFilter();
-                    recipeStringFilter.setEquals(ingredientDTO.getName());
-                    recipeCriteria.setName(recipeStringFilter);
-                    List<RecipeDTO> recipeDTOs = recipeQueryService.findByCriteria(recipeCriteria);
-                    for (RecipeDTO recipeDTO : recipeDTOs) {
-                        RecipeWithIngredientsDTO recipeWithIngredientsDTO = new RecipeWithIngredientsDTO(recipeDTO, ingredientDTOs);
-                        recipes.add(recipeWithIngredientsDTO);
-                    }
+                    recipes.addAll(getRecipeWithIngredientsDTOs(ingredientDTO));
                 }
             }
         }
 
-        recipes = filterRecipesByParameters(recipes, name, vegetarian, servings, instructions);
+        return filterRecipesByParameters(recipes, name, vegetarian, servings, instructions);
+    }
 
-        return recipes;
+    private List<IngredientDTO> getIngredientDTOs(String ingredient) {
+        IngredientCriteria ingredientCriteria = new IngredientCriteria();
+        StringFilter stringFilter = new StringFilter();
+        stringFilter.setEquals(ingredient);
+        ingredientCriteria.setName(stringFilter);
+        return ingredientQueryService.findByCriteria(ingredientCriteria);
+    }
+
+    private List<RecipeWithIngredientsDTO> getRecipeWithIngredientsDTOs(IngredientDTO ingredientDTO) {
+        RecipeCriteria recipeCriteria = new RecipeCriteria();
+        StringFilter recipeStringFilter = new StringFilter();
+        recipeStringFilter.setEquals(ingredientDTO.getName());
+        recipeCriteria.setName(recipeStringFilter);
+        List<RecipeDTO> recipeDTOs = recipeQueryService.findByCriteria(recipeCriteria);
+        return recipeDTOs
+            .stream()
+            .map(recipeDTO -> new RecipeWithIngredientsDTO(recipeDTO, List.of(ingredientDTO)))
+            .collect(Collectors.toList());
     }
 
     private List<RecipeWithIngredientsDTO> filterRecipesByParameters(
@@ -65,7 +71,6 @@ public class CustomRecipeService {
         Integer servings,
         String instructions
     ) {
-        // Filter the recipes based on the parameters
         return recipes
             .stream()
             .filter(recipe -> name == null || recipe.getRecipe().getName().equals(name))
