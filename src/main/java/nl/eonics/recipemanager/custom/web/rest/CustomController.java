@@ -3,6 +3,8 @@ package nl.eonics.recipemanager.custom.web.rest;
 import java.util.List;
 import nl.eonics.recipemanager.custom.service.CustomRecipeService;
 import nl.eonics.recipemanager.custom.service.dto.RecipeWithIngredientsDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api/search")
 public class CustomController {
 
+    private final Logger log = LoggerFactory.getLogger(CustomController.class);
+
     // The service that this controller will use to perform operations.
     private final CustomRecipeService customRecipeService;
 
@@ -22,6 +26,7 @@ public class CustomController {
      * @param customRecipeService the service to be used by this controller
      */
     public CustomController(CustomRecipeService customRecipeService) {
+        log.debug("Constructing CustomController");
         this.customRecipeService = customRecipeService;
     }
 
@@ -44,6 +49,7 @@ public class CustomController {
         @RequestParam(required = false) List<String> ingredients,
         @RequestParam(required = false) String instructions
     ) {
+        log.debug("Handling GET request to /recipe-with-ingredients");
         return customRecipeService.searchRecipeWithIngredients(name, vegetarian, servings, ingredients, instructions);
     }
 }

@@ -8,6 +8,8 @@ import nl.eonics.recipemanager.service.RecipeQueryService;
 import nl.eonics.recipemanager.service.criteria.IngredientCriteria;
 import nl.eonics.recipemanager.service.criteria.RecipeCriteria;
 import nl.eonics.recipemanager.service.dto.IngredientDTO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import tech.jhipster.service.filter.StringFilter;
 
@@ -16,6 +18,8 @@ import tech.jhipster.service.filter.StringFilter;
  */
 @Service
 public class CustomRecipeService {
+
+    private final Logger log = LoggerFactory.getLogger(CustomRecipeService.class);
 
     // The service that this service will use to perform operations related to recipes.
     private final RecipeQueryService recipeQueryService;
@@ -50,6 +54,14 @@ public class CustomRecipeService {
         List<String> ingredients,
         String instructions
     ) {
+        log.debug(
+            "Request to search for recipes with ingredients that match the given parameters: {} {} {} {} {}",
+            name,
+            vegetarian,
+            servings,
+            ingredients,
+            instructions
+        );
         return ingredients == null || ingredients.isEmpty()
             ? List.of()
             : ingredients
@@ -67,6 +79,7 @@ public class CustomRecipeService {
      * @return a list of IngredientDTO that match the given ingredient name
      */
     private List<IngredientDTO> getIngredientDTOs(String ingredient) {
+        log.debug("Request to get ingredients that match the given ingredient name: {}", ingredient);
         IngredientCriteria ingredientCriteria = new IngredientCriteria();
         ingredientCriteria.setName(createStringFilter(ingredient));
         return ingredientQueryService.findByCriteria(ingredientCriteria);
@@ -79,6 +92,7 @@ public class CustomRecipeService {
      * @return a list of RecipeWithIngredientsDTO that match the given IngredientDTO name
      */
     private List<RecipeWithIngredientsDTO> getRecipeWithIngredientsDTOs(IngredientDTO ingredientDTO) {
+        log.debug("Request to get recipes with ingredients that match the given IngredientDTO name: {}", ingredientDTO);
         RecipeCriteria recipeCriteria = new RecipeCriteria();
         recipeCriteria.setName(createStringFilter(ingredientDTO.getName()));
         return recipeQueryService
@@ -105,6 +119,14 @@ public class CustomRecipeService {
         Integer servings,
         String instructions
     ) {
+        log.debug(
+            "Request to filter a RecipeWithIngredientsDTO by the given parameters: {} {} {} {} {}",
+            recipe,
+            name,
+            vegetarian,
+            servings,
+            instructions
+        );
         return (
             (name == null || recipe.getRecipe().getName().equals(name)) &&
             (vegetarian == null || recipe.getRecipe().getVegatarian() == vegetarian) &&
@@ -120,6 +142,7 @@ public class CustomRecipeService {
      * @return a StringFilter with the given value
      */
     private StringFilter createStringFilter(String value) {
+        log.debug("Request to create a StringFilter with the given value: {}", value);
         StringFilter stringFilter = new StringFilter();
         stringFilter.setEquals(value);
         return stringFilter;
