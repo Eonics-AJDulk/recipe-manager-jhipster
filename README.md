@@ -1,4 +1,4 @@
-# recipemanager
+# Recipe Manager
 
 This application was generated using JHipster 7.9.4, you can find documentation and help at [https://www.jhipster.tech/documentation-archive/v7.9.4](https://www.jhipster.tech/documentation-archive/v7.9.4).
 
@@ -6,14 +6,14 @@ This application was generated using JHipster 7.9.4, you can find documentation 
 
 Node is required for generation and recommended for development. `package.json` is always generated for a better development experience with prettier, commit hooks, scripts and so on.
 
-In the project root, JHipster generates configuration files for tools like git, prettier, eslint, husky, and others that are well known and you can find references in the web.
+In the project root, JHipster generates configuration files for tools like git, prettier, eslint, husky, and others that are well known, and you can find references in the web.
 
 `/src/*` structure follows default Java structure.
 
 - `.yo-rc.json` - Yeoman configuration file
   JHipster configuration is stored in this file at `generator-jhipster` key. You may find `generator-jhipster-*` for specific blueprints configuration.
 - `.yo-resolve` (optional) - Yeoman conflict resolver
-  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if ommited) or force. Lines starting with `#` are considered comments and are ignored.
+  Allows to use a specific action when conflicts are found skipping prompts for files that matches a pattern. Each line should match `[pattern] [action]` with pattern been a [Minimatch](https://github.com/isaacs/minimatch#minimatch) pattern and action been one of skip (default if omitted) or force. Lines starting with `#` are considered comments and are ignored.
 - `.jhipster/*.json` - JHipster entity configuration files
 
 - `npmw` - wrapper to use locally installed npm.
@@ -48,7 +48,7 @@ Npm is also used to manage CSS and JavaScript dependencies used in this applicat
 specifying a newer version in [package.json](package.json). You can also run `npm update` and `npm install` to manage dependencies.
 Add the `help` flag on any command to see how you can use it. For example, `npm help update`.
 
-The `npm run` command will list all of the scripts available to run for this project.
+The `npm run` command will list all the scripts available to run for this project.
 
 ### PWA Support
 
@@ -57,7 +57,7 @@ JHipster ships with PWA (Progressive Web App) support, and it's turned off by de
 The service worker initialization code is disabled by default. To enable it, uncomment the following code in `src/main/webapp/app/app.module.ts`:
 
 ```typescript
-ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
+ServiceWorkerModule.register('ngsw-worker.js', { enabled: false });
 ```
 
 ### Managing dependencies
@@ -121,7 +121,7 @@ docker-compose -f src/main/docker/jhipster-control-center.yml up
 
 ### Packaging as jar
 
-To build the final jar and optimize the recipemanager application for production, run:
+To build the final jar and optimize the Recipe Manager application for production, run:
 
 ```
 ./mvnw -Pprod clean verify
@@ -185,7 +185,7 @@ Start your backend without compiling frontend:
 
     npm run backend:start
 
-Start your Cypress end to end testing:
+Start your Cypress end-to-end testing:
 
     npm run e2e:cypress:coverage
 
@@ -240,7 +240,7 @@ To achieve this, first build a docker image of your app by running:
 npm run java:docker
 ```
 
-Or build a arm64 docker image when using an arm64 processor os like MacOS with M1 processor family running:
+Or build an arm64 docker image when using an arm64 processor os like macOS with M1 processor family running:
 
 ```
 npm run java:docker:arm64
@@ -252,7 +252,7 @@ Then run:
 docker-compose -f src/main/docker/app.yml up -d
 ```
 
-When running Docker Desktop on MacOS Big Sur or later, consider enabling experimental `Use the new Virtualization framework` for better processing performance ([disk access performance is worse](https://github.com/docker/roadmap/issues/7)).
+When running Docker Desktop on macOS Big Sur or later, consider enabling experimental `Use the new Virtualization framework` for better processing performance ([disk access performance is worse](https://github.com/docker/roadmap/issues/7)).
 
 For more information refer to [Using Docker and Docker-Compose][], this page also contains information on the docker-compose sub-generator (`jhipster docker-compose`), which is able to generate docker configurations for one or several JHipster applications.
 
