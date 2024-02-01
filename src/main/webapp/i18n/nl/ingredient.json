@@ -19,8 +19,7 @@
         "title": "Ingredient"
       },
       "id": "ID",
-      "name": "Name",
-      "recipe": "Recipe"
+      "name": "Name"
     }
   }
 }

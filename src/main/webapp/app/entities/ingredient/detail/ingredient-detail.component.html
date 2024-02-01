@@ -18,12 +18,6 @@
         <dd>
           <span>{{ ingredient.name }}</span>
         </dd>
-        <dt><span jhiTranslate="recipemanagerApp.ingredient.recipe">Recipe</span></dt>
-        <dd>
-          <div *ngIf="ingredient.recipe">
-            <a [routerLink]="['/recipe', ingredient.recipe.id, 'view']">{{ ingredient.recipe.name }}</a>
-          </div>
-        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

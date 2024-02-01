@@ -70,12 +70,6 @@
               <fa-icon class="p-1" *ngIf="!currentSearch" icon="sort"></fa-icon>
             </div>
           </th>
-          <th scope="col" jhiSortBy="recipe.name">
-            <div class="d-flex">
-              <span jhiTranslate="recipemanagerApp.ingredient.recipe">Recipe</span>
-              <fa-icon class="p-1" icon="sort"></fa-icon>
-            </div>
-          </th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -90,11 +84,6 @@
             <a [routerLink]="['/ingredient', ingredient.id, 'view']">{{ ingredient.id }}</a>
           </td>
           <td>{{ ingredient.name }}</td>
-          <td>
-            <div *ngIf="ingredient.recipe">
-              <a [routerLink]="['/recipe', ingredient.recipe.id, 'view']">{{ ingredient.recipe.name }}</a>
-            </div>
-          </td>
           <td class="text-end">
             <div class="btn-group">
               <button

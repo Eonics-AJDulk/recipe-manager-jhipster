@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Observable } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, map } from 'rxjs/operators';
 
 import { RecipeFormService, RecipeFormGroup } from './recipe-form.service';
 import { IRecipe } from '../recipe.model';
@@ -10,6 +10,8 @@ import { RecipeService } from '../service/recipe.service';
 import { AlertError } from 'app/shared/alert/alert-error.model';
 import { EventManager, EventWithContent } from 'app/core/util/event-manager.service';
 import { DataUtils, FileLoadError } from 'app/core/util/data-util.service';
+import { IIngredient } from 'app/entities/ingredient/ingredient.model';
+import { IngredientService } from 'app/entities/ingredient/service/ingredient.service';
 
 @Component({
   selector: 'jhi-recipe-update',
@@ -19,6 +21,8 @@ export class RecipeUpdateComponent implements OnInit {
   isSaving = false;
   recipe: IRecipe | null = null;
 
+  ingredientsSharedCollection: IIngredient[] = [];
+
   editForm: RecipeFormGroup = this.recipeFormService.createRecipeFormGroup();
 
   constructor(
@@ -26,8 +30,11 @@ export class RecipeUpdateComponent implements OnInit {
     protected eventManager: EventManager,
     protected recipeService: RecipeService,
     protected recipeFormService: RecipeFormService,
+    protected ingredientService: IngredientService,
     protected activatedRoute: ActivatedRoute
   ) {}
+
+  compareIngredient = (o1: IIngredient | null, o2: IIngredient | null): boolean => this.ingredientService.compareIngredient(o1, o2);
 
   ngOnInit(): void {
     this.activatedRoute.data.subscribe(({ recipe }) => {
@@ -35,6 +42,8 @@ export class RecipeUpdateComponent implements OnInit {
       if (recipe) {
         this.updateForm(recipe);
       }
+
+      this.loadRelationshipsOptions();
     });
   }
 
@@ -89,5 +98,22 @@ export class RecipeUpdateComponent implements OnInit {
   protected updateForm(recipe: IRecipe): void {
     this.recipe = recipe;
     this.recipeFormService.resetForm(this.editForm, recipe);
+
+    this.ingredientsSharedCollection = this.ingredientService.addIngredientToCollectionIfMissing<IIngredient>(
+      this.ingredientsSharedCollection,
+      ...(recipe.ingredients ?? [])
+    );
+  }
+
+  protected loadRelationshipsOptions(): void {
+    this.ingredientService
+      .query()
+      .pipe(map((res: HttpResponse<IIngredient[]>) => res.body ?? []))
+      .pipe(
+        map((ingredients: IIngredient[]) =>
+          this.ingredientService.addIngredientToCollectionIfMissing<IIngredient>(ingredients, ...(this.recipe?.ingredients ?? []))
+        )
+      )
+      .subscribe((ingredients: IIngredient[]) => (this.ingredientsSharedCollection = ingredients));
   }
 }

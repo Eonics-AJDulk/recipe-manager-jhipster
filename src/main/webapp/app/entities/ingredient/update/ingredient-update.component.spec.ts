@@ -9,8 +9,6 @@ import { of, Subject, from } from 'rxjs';
 import { IngredientFormService } from './ingredient-form.service';
 import { IngredientService } from '../service/ingredient.service';
 import { IIngredient } from '../ingredient.model';
-import { IRecipe } from 'app/entities/recipe/recipe.model';
-import { RecipeService } from 'app/entities/recipe/service/recipe.service';
 
 import { IngredientUpdateComponent } from './ingredient-update.component';
 
@@ -20,7 +18,6 @@ describe('Ingredient Management Update Component', () => {
   let activatedRoute: ActivatedRoute;
   let ingredientFormService: IngredientFormService;
   let ingredientService: IngredientService;
-  let recipeService: RecipeService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -43,43 +40,17 @@ describe('Ingredient Management Update Component', () => {
     activatedRoute = TestBed.inject(ActivatedRoute);
     ingredientFormService = TestBed.inject(IngredientFormService);
     ingredientService = TestBed.inject(IngredientService);
-    recipeService = TestBed.inject(RecipeService);
 
     comp = fixture.componentInstance;
   });
 
   describe('ngOnInit', () => {
-    it('Should call Recipe query and add missing value', () => {
-      const ingredient: IIngredient = { id: 456 };
-      const recipe: IRecipe = { id: 88020 };
-      ingredient.recipe = recipe;
-
-      const recipeCollection: IRecipe[] = [{ id: 53211 }];
-      jest.spyOn(recipeService, 'query').mockReturnValue(of(new HttpResponse({ body: recipeCollection })));
-      const additionalRecipes = [recipe];
-      const expectedCollection: IRecipe[] = [...additionalRecipes, ...recipeCollection];
-      jest.spyOn(recipeService, 'addRecipeToCollectionIfMissing').mockReturnValue(expectedCollection);
-
-      activatedRoute.data = of({ ingredient });
-      comp.ngOnInit();
-
-      expect(recipeService.query).toHaveBeenCalled();
-      expect(recipeService.addRecipeToCollectionIfMissing).toHaveBeenCalledWith(
-        recipeCollection,
-        ...additionalRecipes.map(expect.objectContaining)
-      );
-      expect(comp.recipesSharedCollection).toEqual(expectedCollection);
-    });
-
     it('Should update editForm', () => {
       const ingredient: IIngredient = { id: 456 };
-      const recipe: IRecipe = { id: 98291 };
-      ingredient.recipe = recipe;
 
       activatedRoute.data = of({ ingredient });
       comp.ngOnInit();
 
-      expect(comp.recipesSharedCollection).toContain(recipe);
       expect(comp.ingredient).toEqual(ingredient);
     });
   });
@@ -149,18 +120,6 @@ describe('Ingredient Management Update Component', () => {
       expect(ingredientService.update).toHaveBeenCalled();
       expect(comp.isSaving).toEqual(false);
       expect(comp.previousState).not.toHaveBeenCalled();
-    });
-  });
-
-  describe('Compare relationships', () => {
-    describe('compareRecipe', () => {
-      it('Should forward to recipeService', () => {
-        const entity = { id: 123 };
-        const entity2 = { id: 456 };
-        jest.spyOn(recipeService, 'compareRecipe');
-        comp.compareRecipe(entity, entity2);
-        expect(recipeService.compareRecipe).toHaveBeenCalledWith(entity, entity2);
-      });
     });
   });
 });

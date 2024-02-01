@@ -21,7 +21,6 @@ describe('Ingredient Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
-            recipe: expect.any(Object),
           })
         );
       });
@@ -33,7 +32,6 @@ describe('Ingredient Form Service', () => {
           expect.objectContaining({
             id: expect.any(Object),
             name: expect.any(Object),
-            recipe: expect.any(Object),
           })
         );
       });

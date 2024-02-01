@@ -23,9 +23,6 @@ public class Ingredient implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    private Recipe recipe;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -52,19 +49,6 @@ public class Ingredient implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Recipe getRecipe() {
-        return this.recipe;
-    }
-
-    public void setRecipe(Recipe recipe) {
-        this.recipe = recipe;
-    }
-
-    public Ingredient recipe(Recipe recipe) {
-        this.setRecipe(recipe);
-        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

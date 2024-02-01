@@ -9,8 +9,8 @@
     <artifactId>recipemanager</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <packaging>jar</packaging>
-    <name>Recipe Manager</name>
-    <description>Description for Recipe Manager</description>
+    <name>Recipemanager</name>
+    <description>Description for recipemanager</description>
 
     <repositories>
         <!-- jhipster-needle-maven-repository -->

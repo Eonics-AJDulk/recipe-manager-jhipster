@@ -104,6 +104,15 @@ public class RecipeService {
     }
 
     /**
+     * Get all the recipes with eager load of many-to-many relationships.
+     *
+     * @return the list of entities.
+     */
+    public Page<RecipeDTO> findAllWithEagerRelationships(Pageable pageable) {
+        return recipeRepository.findAllWithEagerRelationships(pageable).map(recipeMapper::toDto);
+    }
+
+    /**
      * Get one recipe by id.
      *
      * @param id the id of the entity.
@@ -112,7 +121,7 @@ public class RecipeService {
     @Transactional(readOnly = true)
     public Optional<RecipeDTO> findOne(Long id) {
         log.debug("Request to get Recipe : {}", id);
-        return recipeRepository.findById(id).map(recipeMapper::toDto);
+        return recipeRepository.findOneWithEagerRelationships(id).map(recipeMapper::toDto);
     }
 
     /**

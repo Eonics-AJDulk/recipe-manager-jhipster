@@ -30,6 +30,13 @@
         <dd>
           <span>{{ recipe.name }}</span>
         </dd>
+        <dt><span jhiTranslate="recipemanagerApp.recipe.ingredients">Ingredients</span></dt>
+        <dd>
+          <span *ngFor="let ingredients of recipe.ingredients; let last = last">
+            <a [routerLink]="['/ingredient', ingredients.id, 'view']">{{ ingredients.name }}</a
+            >{{ last ? '' : ', ' }}
+          </span>
+        </dd>
       </dl>
 
       <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">

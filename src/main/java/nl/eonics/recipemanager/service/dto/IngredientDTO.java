@@ -13,8 +13,6 @@ public class IngredientDTO implements Serializable {
 
     private String name;
 
-    private RecipeDTO recipe;
-
     public Long getId() {
         return id;
     }
@@ -29,14 +27,6 @@ public class IngredientDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public RecipeDTO getRecipe() {
-        return recipe;
-    }
-
-    public void setRecipe(RecipeDTO recipe) {
-        this.recipe = recipe;
     }
 
     @Override
@@ -66,7 +56,6 @@ public class IngredientDTO implements Serializable {
         return "IngredientDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
-            ", recipe=" + getRecipe() +
             "}";
     }
 }

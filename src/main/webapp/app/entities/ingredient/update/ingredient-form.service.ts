@@ -19,7 +19,6 @@ type IngredientFormDefaults = Pick<NewIngredient, 'id'>;
 type IngredientFormGroupContent = {
   id: FormControl<IIngredient['id'] | NewIngredient['id']>;
   name: FormControl<IIngredient['name']>;
-  recipe: FormControl<IIngredient['recipe']>;
 };
 
 export type IngredientFormGroup = FormGroup<IngredientFormGroupContent>;
@@ -40,7 +39,6 @@ export class IngredientFormService {
         }
       ),
       name: new FormControl(ingredientRawValue.name),
-      recipe: new FormControl(ingredientRawValue.recipe),
     });
   }
 

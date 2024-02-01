@@ -1,7 +1,9 @@
 package nl.eonics.recipemanager.service.dto;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 import javax.persistence.Lob;
 
 /**
@@ -20,6 +22,8 @@ public class RecipeDTO implements Serializable {
     private String instructions;
 
     private String name;
+
+    private Set<IngredientDTO> ingredients = new HashSet<>();
 
     public Long getId() {
         return id;
@@ -61,6 +65,14 @@ public class RecipeDTO implements Serializable {
         this.name = name;
     }
 
+    public Set<IngredientDTO> getIngredients() {
+        return ingredients;
+    }
+
+    public void setIngredients(Set<IngredientDTO> ingredients) {
+        this.ingredients = ingredients;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -91,6 +103,7 @@ public class RecipeDTO implements Serializable {
             ", nrOfServings=" + getNrOfServings() +
             ", instructions='" + getInstructions() + "'" +
             ", name='" + getName() + "'" +
+            ", ingredients=" + getIngredients() +
             "}";
     }
 }

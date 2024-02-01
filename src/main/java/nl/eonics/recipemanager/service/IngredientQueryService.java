@@ -101,12 +101,6 @@ public class IngredientQueryService extends QueryService<Ingredient> {
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), Ingredient_.name));
             }
-            if (criteria.getRecipeId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getRecipeId(), root -> root.join(Ingredient_.recipe, JoinType.LEFT).get(Recipe_.id))
-                    );
-            }
         }
         return specification;
     }

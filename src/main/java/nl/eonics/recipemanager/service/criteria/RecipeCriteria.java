@@ -29,6 +29,8 @@ public class RecipeCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
+    private LongFilter ingredientsId;
+
     private Boolean distinct;
 
     public RecipeCriteria() {}
@@ -38,6 +40,7 @@ public class RecipeCriteria implements Serializable, Criteria {
         this.vegatarian = other.vegatarian == null ? null : other.vegatarian.copy();
         this.nrOfServings = other.nrOfServings == null ? null : other.nrOfServings.copy();
         this.name = other.name == null ? null : other.name.copy();
+        this.ingredientsId = other.ingredientsId == null ? null : other.ingredientsId.copy();
         this.distinct = other.distinct;
     }
 
@@ -106,6 +109,21 @@ public class RecipeCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
+    public LongFilter getIngredientsId() {
+        return ingredientsId;
+    }
+
+    public LongFilter ingredientsId() {
+        if (ingredientsId == null) {
+            ingredientsId = new LongFilter();
+        }
+        return ingredientsId;
+    }
+
+    public void setIngredientsId(LongFilter ingredientsId) {
+        this.ingredientsId = ingredientsId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -128,13 +146,14 @@ public class RecipeCriteria implements Serializable, Criteria {
             Objects.equals(vegatarian, that.vegatarian) &&
             Objects.equals(nrOfServings, that.nrOfServings) &&
             Objects.equals(name, that.name) &&
+            Objects.equals(ingredientsId, that.ingredientsId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, vegatarian, nrOfServings, name, distinct);
+        return Objects.hash(id, vegatarian, nrOfServings, name, ingredientsId, distinct);
     }
 
     // prettier-ignore
@@ -145,6 +164,7 @@ public class RecipeCriteria implements Serializable, Criteria {
             (vegatarian != null ? "vegatarian=" + vegatarian + ", " : "") +
             (nrOfServings != null ? "nrOfServings=" + nrOfServings + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
+            (ingredientsId != null ? "ingredientsId=" + ingredientsId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

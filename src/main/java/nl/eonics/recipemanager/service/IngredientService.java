@@ -108,15 +108,6 @@ public class IngredientService {
     }
 
     /**
-     * Get all the ingredients with eager load of many-to-many relationships.
-     *
-     * @return the list of entities.
-     */
-    public Page<IngredientDTO> findAllWithEagerRelationships(Pageable pageable) {
-        return ingredientRepository.findAllWithEagerRelationships(pageable).map(ingredientMapper::toDto);
-    }
-
-    /**
      * Get one ingredient by id.
      *
      * @param id the id of the entity.
@@ -125,7 +116,7 @@ public class IngredientService {
     @Transactional(readOnly = true)
     public Optional<IngredientDTO> findOne(Long id) {
         log.debug("Request to get Ingredient : {}", id);
-        return ingredientRepository.findOneWithEagerRelationships(id).map(ingredientMapper::toDto);
+        return ingredientRepository.findById(id).map(ingredientMapper::toDto);
     }
 
     /**

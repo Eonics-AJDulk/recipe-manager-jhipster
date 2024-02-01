@@ -22,7 +22,8 @@
       "vegatarian": "Vegatarian",
       "nrOfServings": "Nr Of Servings",
       "instructions": "Instructions",
-      "name": "Name"
+      "name": "Name",
+      "ingredients": "Ingredients"
     }
   }
 }

@@ -158,7 +158,6 @@ export class IngredientComponent implements OnInit {
     const queryObject: any = {
       page: pageToLoad - 1,
       size: this.itemsPerPage,
-      eagerload: true,
       query: currentSearch,
       sort: this.getSortQueryParam(predicate, ascending),
     };

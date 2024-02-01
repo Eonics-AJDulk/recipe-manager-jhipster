@@ -7,7 +7,6 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -16,10 +15,8 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import nl.eonics.recipemanager.IntegrationTest;
 import nl.eonics.recipemanager.domain.Ingredient;
-import nl.eonics.recipemanager.domain.Recipe;
 import nl.eonics.recipemanager.repository.IngredientRepository;
 import nl.eonics.recipemanager.repository.search.IngredientSearchRepository;
-import nl.eonics.recipemanager.service.IngredientService;
 import nl.eonics.recipemanager.service.criteria.IngredientCriteria;
 import nl.eonics.recipemanager.service.dto.IngredientDTO;
 import nl.eonics.recipemanager.service.mapper.IngredientMapper;
@@ -28,9 +25,6 @@ import org.assertj.core.util.IterableUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
@@ -45,7 +39,6 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link IngredientResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class IngredientResourceIT {
@@ -63,14 +56,8 @@ class IngredientResourceIT {
     @Autowired
     private IngredientRepository ingredientRepository;
 
-    @Mock
-    private IngredientRepository ingredientRepositoryMock;
-
     @Autowired
     private IngredientMapper ingredientMapper;
-
-    @Mock
-    private IngredientService ingredientServiceMock;
 
     @Autowired
     private IngredientSearchRepository ingredientSearchRepository;
@@ -177,23 +164,6 @@ class IngredientResourceIT {
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
-    @SuppressWarnings({ "unchecked" })
-    void getAllIngredientsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(ingredientServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restIngredientMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(ingredientServiceMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllIngredientsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(ingredientServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restIngredientMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
-        verify(ingredientRepositoryMock, times(1)).findAll(any(Pageable.class));
-    }
-
     @Test
     @Transactional
     void getIngredient() throws Exception {
@@ -290,29 +260,6 @@ class IngredientResourceIT {
 
         // Get all the ingredientList where name does not contain UPDATED_NAME
         defaultIngredientShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
-    }
-
-    @Test
-    @Transactional
-    void getAllIngredientsByRecipeIsEqualToSomething() throws Exception {
-        Recipe recipe;
-        if (TestUtil.findAll(em, Recipe.class).isEmpty()) {
-            ingredientRepository.saveAndFlush(ingredient);
-            recipe = RecipeResourceIT.createEntity(em);
-        } else {
-            recipe = TestUtil.findAll(em, Recipe.class).get(0);
-        }
-        em.persist(recipe);
-        em.flush();
-        ingredient.setRecipe(recipe);
-        ingredientRepository.saveAndFlush(ingredient);
-        Long recipeId = recipe.getId();
-
-        // Get all the ingredientList where recipe equals to recipeId
-        defaultIngredientShouldBeFound("recipeId.equals=" + recipeId);
-
-        // Get all the ingredientList where recipe equals to (recipeId + 1)
-        defaultIngredientShouldNotBeFound("recipeId.equals=" + (recipeId + 1));
     }
 
     /**

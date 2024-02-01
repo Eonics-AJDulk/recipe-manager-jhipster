@@ -25,8 +25,6 @@ public class IngredientCriteria implements Serializable, Criteria {
 
     private StringFilter name;
 
-    private LongFilter recipeId;
-
     private Boolean distinct;
 
     public IngredientCriteria() {}
@@ -34,7 +32,6 @@ public class IngredientCriteria implements Serializable, Criteria {
     public IngredientCriteria(IngredientCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.name = other.name == null ? null : other.name.copy();
-        this.recipeId = other.recipeId == null ? null : other.recipeId.copy();
         this.distinct = other.distinct;
     }
 
@@ -73,21 +70,6 @@ public class IngredientCriteria implements Serializable, Criteria {
         this.name = name;
     }
 
-    public LongFilter getRecipeId() {
-        return recipeId;
-    }
-
-    public LongFilter recipeId() {
-        if (recipeId == null) {
-            recipeId = new LongFilter();
-        }
-        return recipeId;
-    }
-
-    public void setRecipeId(LongFilter recipeId) {
-        this.recipeId = recipeId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -105,17 +87,12 @@ public class IngredientCriteria implements Serializable, Criteria {
             return false;
         }
         final IngredientCriteria that = (IngredientCriteria) o;
-        return (
-            Objects.equals(id, that.id) &&
-            Objects.equals(name, that.name) &&
-            Objects.equals(recipeId, that.recipeId) &&
-            Objects.equals(distinct, that.distinct)
-        );
+        return Objects.equals(id, that.id) && Objects.equals(name, that.name) && Objects.equals(distinct, that.distinct);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, recipeId, distinct);
+        return Objects.hash(id, name, distinct);
     }
 
     // prettier-ignore
@@ -124,7 +101,6 @@ public class IngredientCriteria implements Serializable, Criteria {
         return "IngredientCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (name != null ? "name=" + name + ", " : "") +
-            (recipeId != null ? "recipeId=" + recipeId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

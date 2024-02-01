@@ -24,6 +24,7 @@ describe('Recipe Form Service', () => {
             nrOfServings: expect.any(Object),
             instructions: expect.any(Object),
             name: expect.any(Object),
+            ingredients: expect.any(Object),
           })
         );
       });
@@ -38,6 +39,7 @@ describe('Recipe Form Service', () => {
             nrOfServings: expect.any(Object),
             instructions: expect.any(Object),
             name: expect.any(Object),
+            ingredients: expect.any(Object),
           })
         );
       });

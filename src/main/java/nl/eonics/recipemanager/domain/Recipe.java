@@ -1,6 +1,8 @@
 package nl.eonics.recipemanager.domain;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import org.hibernate.annotations.Type;
 
@@ -34,6 +36,14 @@ public class Recipe implements Serializable {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+        name = "rel_recipe__ingredients",
+        joinColumns = @JoinColumn(name = "recipe_id"),
+        inverseJoinColumns = @JoinColumn(name = "ingredients_id")
+    )
+    private Set<Ingredient> ingredients = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -100,6 +110,29 @@ public class Recipe implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Set<Ingredient> getIngredients() {
+        return this.ingredients;
+    }
+
+    public void setIngredients(Set<Ingredient> ingredients) {
+        this.ingredients = ingredients;
+    }
+
+    public Recipe ingredients(Set<Ingredient> ingredients) {
+        this.setIngredients(ingredients);
+        return this;
+    }
+
+    public Recipe addIngredients(Ingredient ingredient) {
+        this.ingredients.add(ingredient);
+        return this;
+    }
+
+    public Recipe removeIngredients(Ingredient ingredient) {
+        this.ingredients.remove(ingredient);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

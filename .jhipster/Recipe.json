@@ -24,6 +24,15 @@
   "name": "Recipe",
   "pagination": "infinite-scroll",
   "readOnly": false,
-  "relationships": [],
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "ingredient",
+      "otherEntityRelationshipName": "recipes",
+      "ownerSide": true,
+      "relationshipName": "ingredients",
+      "relationshipType": "many-to-many"
+    }
+  ],
   "service": "serviceClass"
 }

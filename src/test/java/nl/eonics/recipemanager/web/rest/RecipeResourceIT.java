@@ -7,6 +7,7 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -14,9 +15,11 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import nl.eonics.recipemanager.IntegrationTest;
+import nl.eonics.recipemanager.domain.Ingredient;
 import nl.eonics.recipemanager.domain.Recipe;
 import nl.eonics.recipemanager.repository.RecipeRepository;
 import nl.eonics.recipemanager.repository.search.RecipeSearchRepository;
+import nl.eonics.recipemanager.service.RecipeService;
 import nl.eonics.recipemanager.service.criteria.RecipeCriteria;
 import nl.eonics.recipemanager.service.dto.RecipeDTO;
 import nl.eonics.recipemanager.service.mapper.RecipeMapper;
@@ -25,6 +28,9 @@ import org.assertj.core.util.IterableUtil;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.data.domain.PageImpl;
@@ -40,6 +46,7 @@ import org.springframework.util.Base64Utils;
  * Integration tests for the {@link RecipeResource} REST controller.
  */
 @IntegrationTest
+@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class RecipeResourceIT {
@@ -67,8 +74,14 @@ class RecipeResourceIT {
     @Autowired
     private RecipeRepository recipeRepository;
 
+    @Mock
+    private RecipeRepository recipeRepositoryMock;
+
     @Autowired
     private RecipeMapper recipeMapper;
+
+    @Mock
+    private RecipeService recipeServiceMock;
 
     @Autowired
     private RecipeSearchRepository recipeSearchRepository;
@@ -187,6 +200,23 @@ class RecipeResourceIT {
             .andExpect(jsonPath("$.[*].nrOfServings").value(hasItem(DEFAULT_NR_OF_SERVINGS)))
             .andExpect(jsonPath("$.[*].instructions").value(hasItem(DEFAULT_INSTRUCTIONS.toString())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllRecipesWithEagerRelationshipsIsEnabled() throws Exception {
+        when(recipeServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restRecipeMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
+
+        verify(recipeServiceMock, times(1)).findAllWithEagerRelationships(any());
+    }
+
+    @SuppressWarnings({ "unchecked" })
+    void getAllRecipesWithEagerRelationshipsIsNotEnabled() throws Exception {
+        when(recipeServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+
+        restRecipeMockMvc.perform(get(ENTITY_API_URL + "?eagerload=false")).andExpect(status().isOk());
+        verify(recipeRepositoryMock, times(1)).findAll(any(Pageable.class));
     }
 
     @Test
@@ -418,6 +448,29 @@ class RecipeResourceIT {
 
         // Get all the recipeList where name does not contain UPDATED_NAME
         defaultRecipeShouldBeFound("name.doesNotContain=" + UPDATED_NAME);
+    }
+
+    @Test
+    @Transactional
+    void getAllRecipesByIngredientsIsEqualToSomething() throws Exception {
+        Ingredient ingredients;
+        if (TestUtil.findAll(em, Ingredient.class).isEmpty()) {
+            recipeRepository.saveAndFlush(recipe);
+            ingredients = IngredientResourceIT.createEntity(em);
+        } else {
+            ingredients = TestUtil.findAll(em, Ingredient.class).get(0);
+        }
+        em.persist(ingredients);
+        em.flush();
+        recipe.addIngredients(ingredients);
+        recipeRepository.saveAndFlush(recipe);
+        Long ingredientsId = ingredients.getId();
+
+        // Get all the recipeList where ingredients equals to ingredientsId
+        defaultRecipeShouldBeFound("ingredientsId.equals=" + ingredientsId);
+
+        // Get all the recipeList where ingredients equals to (ingredientsId + 1)
+        defaultRecipeShouldNotBeFound("ingredientsId.equals=" + (ingredientsId + 1));
     }
 
     /**

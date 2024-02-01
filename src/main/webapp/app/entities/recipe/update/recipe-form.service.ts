@@ -14,7 +14,7 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type RecipeFormGroupInput = IRecipe | PartialWithRequiredKeyOf<NewRecipe>;
 
-type RecipeFormDefaults = Pick<NewRecipe, 'id' | 'vegatarian'>;
+type RecipeFormDefaults = Pick<NewRecipe, 'id' | 'vegatarian' | 'ingredients'>;
 
 type RecipeFormGroupContent = {
   id: FormControl<IRecipe['id'] | NewRecipe['id']>;
@@ -22,6 +22,7 @@ type RecipeFormGroupContent = {
   nrOfServings: FormControl<IRecipe['nrOfServings']>;
   instructions: FormControl<IRecipe['instructions']>;
   name: FormControl<IRecipe['name']>;
+  ingredients: FormControl<IRecipe['ingredients']>;
 };
 
 export type RecipeFormGroup = FormGroup<RecipeFormGroupContent>;
@@ -45,6 +46,7 @@ export class RecipeFormService {
       nrOfServings: new FormControl(recipeRawValue.nrOfServings),
       instructions: new FormControl(recipeRawValue.instructions),
       name: new FormControl(recipeRawValue.name),
+      ingredients: new FormControl(recipeRawValue.ingredients ?? []),
     });
   }
 
@@ -66,6 +68,7 @@ export class RecipeFormService {
     return {
       id: null,
       vegatarian: false,
+      ingredients: [],
     };
   }
 }

@@ -63,6 +63,6 @@ class IngredientSearchRepositoryInternalImpl implements IngredientSearchReposito
 
     @Override
     public void index(Ingredient entity) {
-        repository.findOneWithEagerRelationships(entity.getId()).ifPresent(elasticsearchTemplate::save);
+        repository.findById(entity.getId()).ifPresent(elasticsearchTemplate::save);
     }
 }
