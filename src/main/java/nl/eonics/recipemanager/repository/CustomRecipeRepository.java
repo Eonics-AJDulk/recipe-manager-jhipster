@@ -3,7 +3,6 @@ package nl.eonics.recipemanager.repository;
 import java.util.Collection;
 import java.util.List;
 import nl.eonics.recipemanager.domain.Recipe;
-import nl.eonics.recipemanager.repository.RecipeRepositoryWithBagRelationships;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
