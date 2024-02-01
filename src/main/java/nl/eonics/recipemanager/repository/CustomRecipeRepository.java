@@ -14,9 +14,11 @@ public interface CustomRecipeRepository
     extends RecipeRepositoryWithBagRelationships, JpaRepository<Recipe, Long>, JpaSpecificationExecutor<Recipe> {
     @Query(
         "SELECT r FROM Recipe r JOIN r.ingredients i " +
-        "WHERE r.vegatarian = ?1 AND r.nrOfServings = ?2 AND r.instructions LIKE %?5% " +
-        "AND i.name IN ?3 " +
-        "AND i.name NOT IN ?4"
+        "WHERE (?1 IS NULL OR r.vegatarian = ?1) " +
+        "AND (?2 IS NULL OR r.nrOfServings = ?2) " +
+        "AND (?5 IS NULL OR r.instructions LIKE %?5%) " +
+        "AND (?3 IS NULL OR i.name IN ?3) " +
+        "AND (?4 IS NULL OR i.name NOT IN ?4)"
     )
     Collection<Recipe> searchRecipes(
         Boolean vegatarian,
