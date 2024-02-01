@@ -4,20 +4,21 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-import java.util.Arrays;
 import java.util.List;
 import nl.eonics.recipemanager.service.dto.IngredientDTO;
 import nl.eonics.recipemanager.service.dto.RecipeDTO;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.*;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 /**
  * This class contains unit tests for the CustomController class.
- * It uses the Spring Boot Test framework for testing Spring applications.
  */
-@SpringBootTest
+@ExtendWith(MockitoExtension.class)
 public class CustomControllerTest {
 
     /**
@@ -38,10 +39,8 @@ public class CustomControllerTest {
      * It sets up the mocks for the test.
      */
     @BeforeEach
-    public void setup() throws Exception {
-        try (MockedStatic<MockitoAnnotations> theMock = Mockito.mockStatic(MockitoAnnotations.class)) {
-            theMock.when(() -> MockitoAnnotations.openMocks(this)).thenReturn(null);
-        }
+    public void setup() {
+        MockitoAnnotations.openMocks(this);
     }
 
     /**
@@ -53,7 +52,7 @@ public class CustomControllerTest {
         // Given
         RecipeDTO recipeDTO = new RecipeDTO();
         IngredientDTO ingredientDTO = new IngredientDTO();
-        List<RecipeWithIngredientsDTO> expected = Arrays.asList(new RecipeWithIngredientsDTO(recipeDTO, Arrays.asList(ingredientDTO)));
+        List<RecipeWithIngredientsDTO> expected = List.of(new RecipeWithIngredientsDTO(recipeDTO, List.of(ingredientDTO)));
 
         // When
         when(customRecipeService.searchRecipeWithIngredients(any(), any(), any(), any(), any())).thenReturn(expected);
@@ -80,7 +79,7 @@ public class CustomControllerTest {
             "nonexistent",
             false,
             0,
-            Arrays.asList("nonexistent"),
+            List.of("nonexistent"),
             "nonexistent"
         );
         assertEquals(expected, actual);
