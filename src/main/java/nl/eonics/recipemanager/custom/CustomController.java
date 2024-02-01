@@ -27,10 +27,10 @@ public class CustomController {
      * Handles GET requests to "/recipe-with-ingredients".
      * Returns a list of RecipeWithIngredientsDTO that match the given parameters.
      *
-     * @param name the name of the recipe (optional)
-     * @param vegetarian whether the recipe is vegetarian (optional)
-     * @param servings the number of servings the recipe makes (optional)
-     * @param ingredients the ingredients used in the recipe (optional)
+     * @param name         the name of the recipe (optional)
+     * @param vegetarian   whether the recipe is vegetarian (optional)
+     * @param servings     the number of servings the recipe makes (optional)
+     * @param ingredients  the ingredients used in the recipe (optional)
      * @param instructions the instructions for the recipe (optional)
      * @return a list of RecipeWithIngredientsDTO that match the given parameters
      */

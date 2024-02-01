@@ -24,7 +24,7 @@ public class CustomRecipeService {
     /**
      * Constructs a new CustomRecipeService with the given RecipeQueryService and IngredientQueryService.
      *
-     * @param recipeQueryService the service to be used by this service for operations related to recipes
+     * @param recipeQueryService     the service to be used by this service for operations related to recipes
      * @param ingredientQueryService the service to be used by this service for operations related to ingredients
      */
     public CustomRecipeService(RecipeQueryService recipeQueryService, IngredientQueryService ingredientQueryService) {
@@ -35,10 +35,10 @@ public class CustomRecipeService {
     /**
      * Searches for recipes with ingredients that match the given parameters.
      *
-     * @param name the name of the recipe (optional)
-     * @param vegetarian whether the recipe is vegetarian (optional)
-     * @param servings the number of servings the recipe makes (optional)
-     * @param ingredients the ingredients used in the recipe (optional)
+     * @param name         the name of the recipe (optional)
+     * @param vegetarian   whether the recipe is vegetarian (optional)
+     * @param servings     the number of servings the recipe makes (optional)
+     * @param ingredients  the ingredients used in the recipe (optional)
      * @param instructions the instructions for the recipe (optional)
      * @return a list of RecipeWithIngredientsDTO that match the given parameters
      */
@@ -90,10 +90,10 @@ public class CustomRecipeService {
     /**
      * Filters a RecipeWithIngredientsDTO by the given parameters.
      *
-     * @param recipe the RecipeWithIngredientsDTO to filter
-     * @param name the name of the recipe (optional)
-     * @param vegetarian whether the recipe is vegetarian (optional)
-     * @param servings the number of servings the recipe makes (optional)
+     * @param recipe       the RecipeWithIngredientsDTO to filter
+     * @param name         the name of the recipe (optional)
+     * @param vegetarian   whether the recipe is vegetarian (optional)
+     * @param servings     the number of servings the recipe makes (optional)
      * @param instructions the instructions for the recipe (optional)
      * @return true if the RecipeWithIngredientsDTO matches the given parameters, false otherwise
      */
