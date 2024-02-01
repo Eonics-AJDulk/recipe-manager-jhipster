@@ -1,0 +1,23 @@
+{
+  "changelogDate": "20240131193839",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Ingredient",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "recipe",
+      "relationshipName": "recipe",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceClass"
+}

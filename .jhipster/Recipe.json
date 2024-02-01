@@ -1,0 +1,29 @@
+{
+  "changelogDate": "20240131193500",
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "vegatarian",
+      "fieldType": "Boolean"
+    },
+    {
+      "fieldName": "nrOfServings",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "instructions",
+      "fieldType": "byte[]",
+      "fieldTypeBlobContent": "text"
+    },
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Recipe",
+  "pagination": "infinite-scroll",
+  "readOnly": false,
+  "relationships": [],
+  "service": "serviceClass"
+}

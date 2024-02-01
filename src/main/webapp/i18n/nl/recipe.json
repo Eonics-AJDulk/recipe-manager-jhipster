@@ -1,0 +1,28 @@
+{
+  "recipemanagerApp": {
+    "recipe": {
+      "home": {
+        "title": "Recipes",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Maak een nieuwe Recipe",
+        "createOrEditLabel": "Maak of wijzig een Recipe",
+        "search": "Search for Recipe",
+        "notFound": "No Recipes found"
+      },
+      "created": "A new Recipe is created with identifier {{ param }}",
+      "updated": "A Recipe is updated with identifier {{ param }}",
+      "deleted": "A Recipe is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Bent u zeker dat u Recipe {{ id }} wilt verwijderen?"
+      },
+      "detail": {
+        "title": "Recipe"
+      },
+      "id": "ID",
+      "vegatarian": "Vegatarian",
+      "nrOfServings": "Nr Of Servings",
+      "instructions": "Instructions",
+      "name": "Name"
+    }
+  }
+}

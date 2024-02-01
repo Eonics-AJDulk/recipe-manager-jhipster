@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-recipe-heading" data-cy="RecipeCreateUpdateHeading" jhiTranslate="recipemanagerApp.recipe.home.createOrEditLabel">
+        Create or edit a Recipe
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        <div class="row mb-3" *ngIf="editForm.controls.id.value !== null">
+          <label class="form-label" jhiTranslate="global.field.id" for="field_id">ID</label>
+          <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="recipemanagerApp.recipe.vegatarian" for="field_vegatarian">Vegatarian</label>
+          <input
+            type="checkbox"
+            class="form-check"
+            name="vegatarian"
+            id="field_vegatarian"
+            data-cy="vegatarian"
+            formControlName="vegatarian"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="recipemanagerApp.recipe.nrOfServings" for="field_nrOfServings">Nr Of Servings</label>
+          <input
+            type="number"
+            class="form-control"
+            name="nrOfServings"
+            id="field_nrOfServings"
+            data-cy="nrOfServings"
+            formControlName="nrOfServings"
+          />
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="recipemanagerApp.recipe.instructions" for="field_instructions">Instructions</label>
+          <textarea
+            class="form-control"
+            name="instructions"
+            id="field_instructions"
+            data-cy="instructions"
+            formControlName="instructions"
+          ></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <label class="form-label" jhiTranslate="recipemanagerApp.recipe.name" for="field_name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

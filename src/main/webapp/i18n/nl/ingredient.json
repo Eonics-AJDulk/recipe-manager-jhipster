@@ -1,0 +1,26 @@
+{
+  "recipemanagerApp": {
+    "ingredient": {
+      "home": {
+        "title": "Ingredients",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Maak een nieuwe Ingredient",
+        "createOrEditLabel": "Maak of wijzig een Ingredient",
+        "search": "Search for Ingredient",
+        "notFound": "No Ingredients found"
+      },
+      "created": "A new Ingredient is created with identifier {{ param }}",
+      "updated": "A Ingredient is updated with identifier {{ param }}",
+      "deleted": "A Ingredient is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Bent u zeker dat u Ingredient {{ id }} wilt verwijderen?"
+      },
+      "detail": {
+        "title": "Ingredient"
+      },
+      "id": "ID",
+      "name": "Name",
+      "recipe": "Recipe"
+    }
+  }
+}

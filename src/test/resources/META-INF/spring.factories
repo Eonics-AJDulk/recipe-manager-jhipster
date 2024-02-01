@@ -1,0 +1,1 @@
+org.springframework.test.context.ContextCustomizerFactory = nl.eonics.recipemanager.config.TestContainersSpringContextCustomizerFactory
