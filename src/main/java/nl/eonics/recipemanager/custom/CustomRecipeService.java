@@ -71,6 +71,7 @@ public class CustomRecipeService {
             .filter(recipe -> name == null || recipe.getRecipe().getName().equals(name))
             .filter(recipe -> vegetarian == null || recipe.getRecipe().getVegatarian() == vegetarian)
             .filter(recipe -> servings == null || Objects.equals(recipe.getRecipe().getNrOfServings(), servings))
+            .filter(recipe -> instructions == null || recipe.getRecipe().getInstructions().contains(instructions))
             .collect(Collectors.toList());
     }
 }
