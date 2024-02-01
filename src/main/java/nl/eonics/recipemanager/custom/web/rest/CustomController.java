@@ -1,6 +1,8 @@
-package nl.eonics.recipemanager.custom;
+package nl.eonics.recipemanager.custom.web.rest;
 
 import java.util.List;
+import nl.eonics.recipemanager.custom.service.CustomRecipeService;
+import nl.eonics.recipemanager.custom.service.dto.RecipeWithIngredientsDTO;
 import org.springframework.web.bind.annotation.*;
 
 /**

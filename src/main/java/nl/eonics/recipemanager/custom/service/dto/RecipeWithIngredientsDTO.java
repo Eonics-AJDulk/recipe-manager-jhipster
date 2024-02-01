@@ -1,4 +1,4 @@
-package nl.eonics.recipemanager.custom;
+package nl.eonics.recipemanager.custom.service.dto;
 
 import java.util.List;
 import nl.eonics.recipemanager.service.dto.IngredientDTO;

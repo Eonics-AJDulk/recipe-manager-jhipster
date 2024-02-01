@@ -1,7 +1,8 @@
-package nl.eonics.recipemanager.custom;
+package nl.eonics.recipemanager.custom.service;
 
 import java.util.List;
 import java.util.stream.Collectors;
+import nl.eonics.recipemanager.custom.service.dto.RecipeWithIngredientsDTO;
 import nl.eonics.recipemanager.service.IngredientQueryService;
 import nl.eonics.recipemanager.service.RecipeQueryService;
 import nl.eonics.recipemanager.service.criteria.IngredientCriteria;

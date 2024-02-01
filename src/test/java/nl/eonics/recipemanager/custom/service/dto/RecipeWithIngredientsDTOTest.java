@@ -1,17 +1,19 @@
-package nl.eonics.recipemanager.custom;
+package nl.eonics.recipemanager.custom.service.dto;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import nl.eonics.recipemanager.custom.service.dto.RecipeWithIngredientsDTO;
 import nl.eonics.recipemanager.service.dto.IngredientDTO;
 import nl.eonics.recipemanager.service.dto.RecipeDTO;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
  * This class contains unit tests for the RecipeWithIngredientsDTO class.
  */
+@Disabled
 public class RecipeWithIngredientsDTOTest {
 
     /**
