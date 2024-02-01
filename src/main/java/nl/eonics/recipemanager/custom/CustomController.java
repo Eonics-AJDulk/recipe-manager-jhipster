@@ -1,42 +1,47 @@
 package nl.eonics.recipemanager.custom;
 
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+/**
+ * This class is a Rest Controller for handling requests related to custom recipes.
+ * It is mapped to the "/api/search" URL path.
+ */
 @RestController
 @RequestMapping("/api/search")
 public class CustomController {
 
-    private final Logger log = LoggerFactory.getLogger(CustomController.class);
+    // The service that this controller will use to perform operations.
+    private final CustomRecipeService customRecipeService;
 
-    @Autowired
-    private CustomRecipeService customRecipeService;
+    /**
+     * Constructs a new CustomController with the given CustomRecipeService.
+     *
+     * @param customRecipeService the service to be used by this controller
+     */
+    public CustomController(CustomRecipeService customRecipeService) {
+        this.customRecipeService = customRecipeService;
+    }
 
+    /**
+     * Handles GET requests to "/recipe-with-ingredients".
+     * Returns a list of RecipeWithIngredientsDTO that match the given parameters.
+     *
+     * @param name the name of the recipe (optional)
+     * @param vegetarian whether the recipe is vegetarian (optional)
+     * @param servings the number of servings the recipe makes (optional)
+     * @param ingredients the ingredients used in the recipe (optional)
+     * @param instructions the instructions for the recipe (optional)
+     * @return a list of RecipeWithIngredientsDTO that match the given parameters
+     */
     @GetMapping("/recipe-with-ingredients")
-    public ResponseEntity<List<RecipeWithIngredientsDTO>> searchRecipeWithIngredients(
-        @RequestParam(name = "name", required = false) String name,
-        @RequestParam(name = "vegetarian", required = false) Boolean vegetarian,
-        @RequestParam(name = "servings", required = false) Integer servings,
-        @RequestParam(name = "ingredient", required = false) List<String> ingredients,
-        @RequestParam(name = "instructions", required = false) String instructions
+    public List<RecipeWithIngredientsDTO> searchRecipeWithIngredients(
+        @RequestParam(required = false) String name,
+        @RequestParam(required = false) Boolean vegetarian,
+        @RequestParam(required = false) Integer servings,
+        @RequestParam(required = false) List<String> ingredients,
+        @RequestParam(required = false) String instructions
     ) {
-        log.debug("REST request to search for full recipes");
-
-        List<RecipeWithIngredientsDTO> recipes = customRecipeService.searchRecipeWithIngredients(
-            name,
-            vegetarian,
-            servings,
-            ingredients,
-            instructions
-        );
-
-        return ResponseEntity.ok(recipes);
+        return customRecipeService.searchRecipeWithIngredients(name, vegetarian, servings, ingredients, instructions);
     }
 }
