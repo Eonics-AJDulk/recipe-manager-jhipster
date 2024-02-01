@@ -55,7 +55,7 @@ public class CustomControllerTest {
         List<RecipeWithIngredientsDTO> expected = List.of(new RecipeWithIngredientsDTO(recipeDTO, List.of(ingredientDTO)));
 
         // When
-        when(customRecipeService.searchRecipeWithIngredients(any(), any(), any(), any(), any())).thenReturn(expected);
+        when(customRecipeService.searchRecipeWithIngredients(null, null, null, null, null)).thenReturn(expected);
 
         // Then
         List<RecipeWithIngredientsDTO> actual = customController.searchRecipeWithIngredients(null, null, null, null, null);
