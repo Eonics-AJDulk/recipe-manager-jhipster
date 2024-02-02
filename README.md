@@ -29,8 +29,8 @@ The search endpoint accepts a JSON object with the following properties:
 
 **Note:**
 
-- This program requires that at least one ingredient is included.
 - To leave a field empty, use `null` or `""`.
+- For array fields, use `null` or specify an empty array (`[]`).
 
 ## Example Request
 
@@ -62,10 +62,8 @@ The search endpoint accepts a JSON object with the following properties:
       {
         "id": 102,
         "name": "carrots"
-      },
-      ...
+      }
     ]
-  },
-  ...
+  }
 ]
 ```
