@@ -31,7 +31,7 @@ The search endpoint accepts a JSON object with the following properties:
 **Note:**
 
 - To leave a normal field empty, use `null` or `""`.
-- To leave array fields, use `null` or specify an empty array (`[]`).
+- To leave array fields empty, use `null` or specify an empty array (`[]`).
 
 ## Example Request
 
