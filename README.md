@@ -11,6 +11,7 @@ The search endpoint accepts a JSON object with the following properties:
 1. **Vegetarian Recipes**
 
    - `vegatarian`: Filter recipes based on whether they are vegetarian. Use `true` or `false` to specify, or leave it empty for no filter.
+     (Note: The property name is misspelled in the API, but it is kept as is for consistency with the original API.)
 
 2. **Number of Servings**
 
